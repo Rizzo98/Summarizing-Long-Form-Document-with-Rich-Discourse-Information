@@ -1,2 +1,3 @@
 from src.trainings.contentRankingTraining import ContentRankingTraining
 from src.trainings.bartTraining import BartTraining
+from src.trainings.repAwareContentRankingTraining import RepAwareContentRankingTraining

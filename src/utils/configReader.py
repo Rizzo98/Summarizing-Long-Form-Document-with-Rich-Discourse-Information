@@ -62,7 +62,8 @@ class ConfigReader:
     def modelMapper(model,config=True):
         models = {
             'ContentRanking': ContentRanking,
-            'Bart': Bart
+            'Bart': Bart,
+            'RepAwareContentRanking': RepAwareContentRanking
         }
         m = models[model['name']]
         if config:
@@ -99,16 +100,18 @@ class ConfigReader:
     def trainingMapped(data):
         trainings = {
             'ContentRankingTraining': ContentRankingTraining,
-            'BartTraining': BartTraining
+            'BartTraining': BartTraining,
+            'RepAwareContentRankingTraining': RepAwareContentRankingTraining
         }
         return trainings[data]
 
     @staticmethod
     def datasetMapped(data, fromClass, tokenizer):
-        from src.datasets import DocumentDataset, BartDataset
+        from src.datasets import DocumentDataset, BartDataset, DynamicImportanceContentRankingDataset
         datasets = {
             'DocumentDataset': DocumentDataset,
-            'BartDataset': BartDataset
+            'BartDataset': BartDataset,
+            'DynamicImportanceContentRankingDataset': DynamicImportanceContentRankingDataset
         }
         to_return = {
             'params': dict([(k,v) for k,v in data.items() if k!='class' and k!='tokenizer'])
@@ -164,7 +167,7 @@ class ConfigReader:
         to_return['method'] = Inference.inferenceFrom(fromClass)
         to_return['dataset'] = dataset
         to_return['dataset']['params']['data_path'] = data['data_path']
-        to_return['dataloader'] = dataloader
+        to_return['dataloader'] = copy.deepcopy(dataloader)
         to_return['dataloader']['params']['batch_size'] = 1
         to_return['dataloader']['params']['shuffle'] = False
         return to_return

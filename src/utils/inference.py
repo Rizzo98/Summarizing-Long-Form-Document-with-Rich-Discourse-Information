@@ -7,7 +7,8 @@ class Inference:
     def inferenceFrom(modelClass):
         mapping = {
             ContentRanking : Inference.contentRanking,
-            Bart : Inference.bart
+            Bart : Inference.bart,
+            RepAwareContentRanking : Inference.repAwareContentRanking
         }
         return mapping[modelClass]
 
@@ -60,3 +61,33 @@ class Inference:
             summary_store.append({'doc':doc_id,'sections':[{'title':'Summary','sentences':summary.split('.')}]})
         
         return summary_store
+    
+    @staticmethod
+    def repAwareContentRanking(model, inference_loader, device, number_of_sections, number_of_sentences):
+        from src.datasets import StandardDataset
+        from sklearn.cluster import KMeans
+        import math
+
+        n_clusters = 5
+        top_n_per_cluster = 8
+
+        assert isinstance(model,RepAwareContentRanking), 'Model not instance of ContentRanking'
+        raw_docs = inference_loader.dataset.documents
+        summary_store = []
+        for doc_index, (data, _, _) in enumerate(inference_loader):
+            _, sentences_importance, sentences_embeds = model(data, device=device)
+            sentences_importance = sentences_importance[0]
+            sentences_embeds = sentences_embeds[0]
+            sentences_embeds = sentences_embeds.view(sentences_embeds.shape[0]*sentences_embeds.shape[1],sentences_embeds.shape[2])
+            sentences_embeds = sentences_embeds.detach().numpy()
+            labels = KMeans(n_clusters=n_clusters).fit_predict(sentences_embeds)
+
+            for cluster_id in range(n_clusters):
+                cluster = np.where(labels==cluster_id)[0]
+                section_sent = [(math.floor(sent_id/100),sent_id%100) for sent_id in cluster]
+                #TODO: error in rawSent_importance
+                rawSent_importance = [(raw_docs[doc_index].sections[section].sentences[sent].sentence, sentences_importance[section][sent]) for section,sent in section_sent]
+                best_sentences = sorted(rawSent_importance,key=lambda sent,imp: imp,reverse=True)[:top_n_per_cluster]
+                best_sentences = [sent for sent,imp in best_sentences]
+
+        return StandardDataset(summary_store, inference_loader.dataset.groundtruth)

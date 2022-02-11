@@ -86,4 +86,3 @@ for modelIndex in range(len(config.models)):
           
         inference_loader = modelConfig.inference['dataloader']['class'](inferenceset,**modelConfig.inference['dataloader']['params'])
         docs_summary = modelConfig.inference['method'](model,inference_loader,config.device,**modelConfig.inference['params'])
-        print('step')
