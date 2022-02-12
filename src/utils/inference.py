@@ -75,6 +75,7 @@ class Inference:
         raw_docs = inference_loader.dataset.documents
         summary_store = []
         for doc_index, (data, _, _) in enumerate(inference_loader):
+            summary_doc = {'doc':doc_index,'sections':[]}
             _, sentences_importance, sentences_embeds = model(data, device=device)
             sentences_importance = sentences_importance[0]
             sentences_embeds = sentences_embeds[0]
@@ -85,9 +86,15 @@ class Inference:
             for cluster_id in range(n_clusters):
                 cluster = np.where(labels==cluster_id)[0]
                 section_sent = [(math.floor(sent_id/100),sent_id%100) for sent_id in cluster]
-                #TODO: error in rawSent_importance
-                rawSent_importance = [(raw_docs[doc_index].sections[section].sentences[sent].sentence, sentences_importance[section][sent]) for section,sent in section_sent]
-                best_sentences = sorted(rawSent_importance,key=lambda sent,imp: imp,reverse=True)[:top_n_per_cluster]
+                rawSent_importance = []
+                for section,sent in section_sent:
+                    if section < len(raw_docs[doc_index].sections):
+                        if sent < len(raw_docs[doc_index].sections[section].sentences):
+                            rawSent_importance.append((raw_docs[doc_index].sections[section].sentences[sent].sentence, sentences_importance[section][sent]))
+
+                best_sentences = sorted(rawSent_importance,key=lambda x: x[1],reverse=True)[:top_n_per_cluster]
                 best_sentences = [sent for sent,imp in best_sentences]
+                summary_doc['sections'].append({'title':f'Section {cluster_id}', 'sentences':best_sentences})
+            summary_store.append(summary_doc)
 
         return StandardDataset(summary_store, inference_loader.dataset.groundtruth)
