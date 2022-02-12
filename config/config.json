@@ -8,6 +8,14 @@
             "pretrained_model":"./data/models/RepAwareModel.pt",
             "inference":true,
             "from_previous":false
+        },
+        {
+            "name":"Bart",
+            "config":"bart.json",
+            "train":true,
+            "pretrained_model":null,
+            "inference":true,
+            "from_previous":true
         }
     ],
     "output":{

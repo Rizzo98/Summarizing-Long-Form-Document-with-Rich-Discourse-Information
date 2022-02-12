@@ -36,9 +36,9 @@ class ModelConfig:
             'training_set': self.training['dataset']['params']['data_path'],
             'validation_set': self.training['validation']['params']['data_path'],
             'epochs': self.training['epochs'],
-            'optimizer': self.training['optimizer']['class'].__name__,
-            'optimizer_params': self.training['optimizer']['params'],
-            'loss': self.training['loss']['class'].__name__
+            'optimizer': self.training['optimizer']['class'].__name__ if self.training['optimizer'] != None else None ,
+            'optimizer_params': self.training['optimizer']['params'] if self.training['optimizer'] != None else None,
+            'loss': self.training['loss']['class'].__name__ if self.training['loss'] != None else None
         }
         return d
 

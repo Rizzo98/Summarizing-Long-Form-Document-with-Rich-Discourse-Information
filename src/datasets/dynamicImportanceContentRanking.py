@@ -47,7 +47,7 @@ class Sentence():
             weight = self.__normal(relative_abs_sent_pos,relative_section_pos)
             rouge_scores = rouge.get_scores(abs_sent.sentence,self.sentence)[0]
             rouge_scores = np.mean([rouge_scores['rouge-1']['f'],rouge_scores['rouge-2']['f'],rouge_scores['rouge-l']['f']])
-            tot_score += rouge_scores
+            tot_score += rouge_scores*weight
         self.trueImportance = tot_score
 
     def __len__(self) -> int:

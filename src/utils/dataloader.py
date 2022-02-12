@@ -66,7 +66,8 @@ class BartDataLoader():
             eval_steps=500, 
             warmup_steps=500, 
             overwrite_output_dir=True,
-            save_total_limit=1
+            save_total_limit=1,
+            report_to='none'
             )
         
     def __iter__(self):

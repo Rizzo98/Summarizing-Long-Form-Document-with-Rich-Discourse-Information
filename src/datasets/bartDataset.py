@@ -23,6 +23,7 @@ class BartDataset(Dataset):
         else:
             self.dataset = datasetFromWrapper
 
+
         inputs = self.tokenizer(self.dataset["Text"])
         outputs = self.tokenizer(self.dataset["Summary"])
 
