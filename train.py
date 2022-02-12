@@ -6,6 +6,15 @@ import wandb
 import sys
 import copy
 
+'''
+TODO:
+-test if bart training and bart inference works with gpu on colab
+-big refactory of the code
+-write README
+-merge branches on github
+-on inference implement rouge evaluation
+'''
+
 sys.setrecursionlimit(10000)
 config = ConfigReader()
 
@@ -86,3 +95,6 @@ for modelIndex in range(len(config.models)):
           
         inference_loader = modelConfig.inference['dataloader']['class'](inferenceset,**modelConfig.inference['dataloader']['params'])
         docs_summary = modelConfig.inference['method'](model,inference_loader,config.device,**modelConfig.inference['params'])
+
+        if not followingModelExists:
+            outputManager.saveSummaries(docs_summary.docs)
