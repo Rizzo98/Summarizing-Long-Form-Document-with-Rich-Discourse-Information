@@ -4,7 +4,7 @@ class BartDataLoader():
     def __init__(self, dataset, batch_size=32, encoder_max_length=100, decoder_max_length=20,
      num_train_epochs=3, device='cpu', shuffle=False, outputFolder=''):
         self.tokenizer = dataset.tokenizer
-        self.raw_docs = dataset.raw_docs
+        self.groundtruth = dataset.groundtruth
         self.dataset = dataset().map( 
             lambda x:x,
             batched=True, 

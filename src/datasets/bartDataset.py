@@ -5,15 +5,17 @@ class BartDataset(Dataset):
      validation_set=False, pre_trained_tokenizer = None, fromWrapper=False, datasetFromWrapper = None):
         
         self.tokenizer = tokenizer['class'](**tokenizer['params'])
-        self.raw_docs = None
+        self.groundtruth = None
 
         if not fromWrapper:
+            self.groundtruth=[]
             f = open(f'./data/{data_path}','r')
             data = json.load(f)
             f.close()
             d = {'Summary':[], 'Text':[], 'Doc_id':[]}
             for doc_id,doc in enumerate(data):
                 abstract = ' '.join(doc['abstract_text'])
+                self.groundtruth.append(abstract)
                 for sentences_list in doc['sections']:
                     sentences_concat = ' '.join(sentences_list)
                     d['Summary'].append(abstract)

@@ -8,10 +8,8 @@ import copy
 
 '''
 TODO:
--big refactory of the code
 -write README
--merge branches on github
--compute rouge on results
+-add wandb project and entity in config
 '''
 
 sys.setrecursionlimit(10000)
@@ -79,7 +77,7 @@ for modelIndex in range(len(config.models)):
     else:
         if modelConfig.modelParams['tokenizer']: #There must be an embedding layer -> extract dimension
             embedding_dim = torch.load(modelConfig.pretrained_model)['embedding.embedding.weight'].shape
-            model = modelConfig.modelClass(tokenizer = embedding_dim, **modelConfig.modelParams['params'])
+            model = modelConfig.modelClass(tokenizer = embedding_dim, **modelConfig.modelParams['params'], device=config.device)
         model.load(modelConfig.pretrained_model)
     
     followingModelExists = modelIndex+1<len(config.models)

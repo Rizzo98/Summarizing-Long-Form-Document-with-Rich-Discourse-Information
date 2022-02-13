@@ -61,7 +61,7 @@ class Inference:
                 summary = ' '.join([tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=False) for g in summary_ids]) 
                 summary_store.append({'doc':doc_id,'sections':[{'title':'Summary','sentences':summary.split('.')}]})
             
-            return summary_store
+            return StandardDataset(summary_store, inference_loader.groundtruth)
     
     @staticmethod
     def repAwareContentRanking(model, inference_loader, device, number_of_sections, number_of_sentences):
