@@ -1,5 +1,6 @@
 import numpy as np
 from src.models import *
+import torch
 
 class Inference:
 

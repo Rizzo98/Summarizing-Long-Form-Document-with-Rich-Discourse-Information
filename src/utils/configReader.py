@@ -125,10 +125,10 @@ class ConfigReader:
 
     @staticmethod
     def dataloaderMapped(data, device):
-        from src.utils import ArxivDataLoader, BartDataLoader
+        from src.dataloaders import BartDataLoader, ContentRankingDataLoader
 
         dataloaders = {
-            'ArxivDataLoader': ArxivDataLoader,
+            'ContentRankingDataLoader': ContentRankingDataLoader,
             'BartDataLoader': BartDataLoader
         }
         to_return = dict([(k,v) for k,v in data.items() if k!='class'])
@@ -139,12 +139,12 @@ class ConfigReader:
     
     @staticmethod
     def tokenizerMapped(data):
-        from src.utils import Bart_tokenizer, Arxiv_preprocess
+        from src.tokenizers import BartTokenizer, ContentRankingTokenizer
 
         if data==None: return
         tokenizers = {
-            'Arxiv_preprocess': Arxiv_preprocess,
-            'BartTokenizer': Bart_tokenizer
+            'ContentRankingTokenizer': ContentRankingTokenizer,
+            'BartTokenizer': BartTokenizer
         }
         to_return = dict([(k,v) for k,v in data.items() if k!='class'])
         to_return['class'] = tokenizers[data['class']]

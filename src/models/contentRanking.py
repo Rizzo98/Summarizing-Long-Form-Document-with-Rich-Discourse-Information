@@ -71,19 +71,3 @@ class ContentRanking(nn.Module):
 
     def load(self,model):
         self.load_state_dict(torch.load(model))
-
-
-class ExtractiveSummarization(nn.Module):
-    def __init__(self):
-        super(ExtractiveSummarization, self).__init__()
-    
-    def forward(self, d):
-        pass
-
-
-class Heroes(nn.Module):
-    def __init__(self):
-        super(Heroes, self).__init__()
-    
-    def forward(self, d):
-        pass 

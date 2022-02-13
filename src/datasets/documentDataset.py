@@ -1,6 +1,6 @@
 from torch.utils.data import Dataset
 from torchvision import transforms
-from src.utils import Arxiv_preprocess
+from src.tokenizers import ContentRankingTokenizer
 import json
 from rouge import Rouge
 import numpy as np

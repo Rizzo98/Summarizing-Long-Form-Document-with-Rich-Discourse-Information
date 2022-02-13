@@ -4,7 +4,7 @@
         "tokenizer":true
     },
     "tokenizer":{
-        "class":"Arxiv_preprocess",
+        "class":"ContentRankingTokenizer",
         "params":{
             "padding":30
         }
@@ -26,7 +26,7 @@
             }
         },
         "training_dataloader":{
-            "class":"ArxivDataLoader",
+            "class":"ContentRankingDataLoader",
             "params":{
                 "batch_size":2,
                 "shuffle":true,

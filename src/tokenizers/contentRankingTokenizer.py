@@ -1,7 +1,6 @@
 from keras import preprocessing
-from transformers import RobertaTokenizerFast
 
-class Arxiv_preprocess:
+class ContentRankingTokenizer:
     def __init__(self, padding:int):
         self.tokenizer = preprocessing.text.Tokenizer()
         self.padding = padding
@@ -18,12 +17,3 @@ class Arxiv_preprocess:
     def get_padded_sentence(self, sentence:str):
         return preprocessing.sequence.pad_sequences(self.tokenizer.texts_to_sequences([sentence]), self.padding, padding='post')[0]
     
-class Bart_tokenizer(RobertaTokenizerFast):
-    def __init__(self, padding="max_length", truncation=True, max_length=100):
-        self.padding = padding
-        self.truncation = truncation
-        self.max_length = max_length
-        self.tokenizer = RobertaTokenizerFast.from_pretrained("roberta-base")
-    
-    def __call__(self, doc):
-        return self.tokenizer(doc,padding=self.padding, truncation=self.truncation, max_length=self.max_length)
