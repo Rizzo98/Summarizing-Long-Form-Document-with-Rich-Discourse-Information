@@ -34,6 +34,7 @@
                 "batch_size":2,
                 "encoder_max_length":40,
                 "decoder_max_length":8,
+                "num_train_epochs":5,
                 "outputFolder":"Test_run"
             }
         },

@@ -42,7 +42,7 @@ class ArxivDataLoader(DataLoader):
 
 class BartDataLoader():
     def __init__(self, dataset, batch_size=32, encoder_max_length=100, decoder_max_length=20,
-     device='cpu', shuffle=False,outputFolder=''):
+     num_train_epochs=3, device='cpu', shuffle=False, outputFolder=''):
         self.tokenizer = dataset.tokenizer
         self.raw_docs = dataset.raw_docs
         self.dataset = dataset().map( 
@@ -57,6 +57,7 @@ class BartDataLoader():
             output_dir=f"./outputs/{outputFolder}/",
             per_device_train_batch_size=batch_size,
             per_device_eval_batch_size=batch_size,
+            num_train_epochs=num_train_epochs,
             predict_with_generate=True,
             evaluation_strategy="epoch",
             do_train=True,

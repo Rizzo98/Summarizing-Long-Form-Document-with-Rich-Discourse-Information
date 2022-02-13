@@ -8,11 +8,10 @@ import copy
 
 '''
 TODO:
--test if bart training and bart inference works with gpu on colab
 -big refactory of the code
 -write README
 -merge branches on github
--on inference implement rouge evaluation
+-compute rouge on results
 '''
 
 sys.setrecursionlimit(10000)

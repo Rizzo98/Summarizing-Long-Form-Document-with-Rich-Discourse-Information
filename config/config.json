@@ -6,14 +6,14 @@
             "config":"ContentRankingDynamicImportance.json",
             "train":false,
             "pretrained_model":"./data/models/RepAwareModel.pt",
-            "inference":true,
+            "inference":false,
             "from_previous":false
         },
         {
             "name":"Bart",
             "config":"bart.json",
-            "train":true,
-            "pretrained_model":null,
+            "train":false,
+            "pretrained_model":"./data/models/bart-cnn",
             "inference":true,
             "from_previous":true
         }
