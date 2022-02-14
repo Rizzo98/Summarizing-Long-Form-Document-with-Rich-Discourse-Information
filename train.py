@@ -8,8 +8,11 @@ import copy
 
 '''
 TODO:
--write README
--add wandb project and entity in config
+- Extract result from summary already on colab (ContentRanking+Bart folder)
+- Finish ReadMe
+- Generate other results from Dynamic importance and Rep Aware
+- Move wandb project & entity in config
+- Check following model do inference
 '''
 
 sys.setrecursionlimit(10000)

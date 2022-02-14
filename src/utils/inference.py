@@ -56,7 +56,7 @@ class Inference:
 
             summary_store = []
             for doc_id, input_ids in input_ids_per_doc_storage.items():    
-                summary_ids = model.generate(torch.unsqueeze(torch.tensor(input_ids),0).to(device), num_beams=4, max_length=25, early_stopping=True)[0]
+                summary_ids = model.generate(torch.unsqueeze(torch.tensor(input_ids),0).to(device), num_beams=4, max_length=266, early_stopping=True)[0]
                 original = ' '.join([tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=False) for g in input_ids])
                 summary = ' '.join([tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=False) for g in summary_ids]) 
                 summary_store.append({'doc':doc_id,'sections':[{'title':'Summary','sentences':summary.split('.')}]})
@@ -81,7 +81,7 @@ class Inference:
             sentences_importance = sentences_importance[0]
             sentences_embeds = sentences_embeds[0]
             sentences_embeds = sentences_embeds.view(sentences_embeds.shape[0]*sentences_embeds.shape[1],sentences_embeds.shape[2])
-            sentences_embeds = sentences_embeds.detach().numpy()
+            sentences_embeds = sentences_embeds.cpu().detach().numpy()
             labels = KMeans(n_clusters=n_clusters).fit_predict(sentences_embeds)
 
             for cluster_id in range(n_clusters):

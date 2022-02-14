@@ -59,7 +59,8 @@ class RepAwareContentRanking(nn.Module):
                 for doc_id, single_sentence_importance in enumerate(sentence_importance):
                     sentences_importance[doc_id][section_id][i] = single_sentence_importance
                 sentence_store[section_id][i] = sentence_embeds
-            section_embeds,_ = self.sectionEncoder(torch.swapaxes(sentence_store,2,1)[section_id])
+            swapped = torch.swapaxes(sentence_store,2,1)[section_id].clone()
+            section_embeds,_ = self.sectionEncoder(swapped)
             section_embeds = self.sentenceAttention(section_embeds)
             section_title_embed = torch.stack((title_store[section_id],section_embeds), dim=1)
             section_title_embed = self.sectionTitleAttention(section_title_embed)

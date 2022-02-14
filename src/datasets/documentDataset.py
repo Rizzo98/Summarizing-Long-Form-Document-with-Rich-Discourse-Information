@@ -72,13 +72,13 @@ class DocumentDataset(Dataset):
         f.close()
         self.groundtruth = []
 
-        for doc in data[:4]:
+        for doc in data[:5]:
             self.groundtruth.append(' '.join(doc['abstract_text']))
 
         padding = params['padding']
         if not validation_set:
             self.tokenizer = tokenizer['class'](**tokenizer['params'])
-            for doc in tqdm(data[:4],desc='Preparing Tokenizer'):
+            for doc in tqdm(data[:5],desc='Preparing Tokenizer'):
                 for sentence in doc['abstract_text']:
                     self.tokenizer.add_sentence(sentence)
                 for section in doc['sections']:
@@ -91,7 +91,7 @@ class DocumentDataset(Dataset):
             self.tokenizer = pre_trained_tokenizer
 
         self.documents = []
-        for doc in tqdm(data[:4],desc='Reading documents'):
+        for doc in tqdm(data[:5],desc='Reading documents'):
             #Abstract
             sentenceList = []
             for sentence in doc['abstract_text']:

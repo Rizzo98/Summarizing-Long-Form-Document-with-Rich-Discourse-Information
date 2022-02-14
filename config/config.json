@@ -2,26 +2,18 @@
     "device":"cpu",
     "models": [
         {
-            "name":"RepAwareContentRanking",
+            "name":"ContentRanking",
             "config":"ContentRankingDynamicImportance.json",
             "train":false,
-            "pretrained_model":"./data/models/RepAwareModel.pt",
-            "inference":false,
-            "from_previous":false
-        },
-        {
-            "name":"Bart",
-            "config":"bart.json",
-            "train":false,
-            "pretrained_model":"./data/models/bart-cnn",
+            "pretrained_model":"./data/models/model.pt",
             "inference":true,
-            "from_previous":true
+            "from_previous":false
         }
     ],
     "output":{
         "folder":"RepAware_test",
-        "save_model":true,
-        "logging":true,
+        "save_model":false,
+        "logging":false,
         "wandb":false
     }
 }

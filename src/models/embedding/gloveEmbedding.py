@@ -37,4 +37,5 @@ class Glove25Embedding(nn.Module):
       self.embedding.weight = torch.nn.parameter.Parameter(embedding_matrix)
     
   def forward(self, x):
+    x[x>=self.embedding.num_embeddings] = 0
     return self.embedding(x.to(torch.int32)).float()
