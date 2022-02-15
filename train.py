@@ -6,23 +6,14 @@ import wandb
 import sys
 import copy
 
-'''
-TODO:
-- Extract result from summary already on colab (ContentRanking+Bart folder)
-- Finish ReadMe
-- Generate other results from Dynamic importance and Rep Aware
-- Move wandb project & entity in config
-- Check following model do inference
-'''
-
 sys.setrecursionlimit(10000)
 config = ConfigReader()
 
 outputManager = OutputManager(config.output_folder)
-if config.wandb:
+if config.wandb!=None:
     wandb.init(
-        project="Summarizing-Long-Form-Document-with-Rich-Discourse-Information", 
-        entity="riz98",
+        project=config.wandb['project'], 
+        entity=config.wandb['entity'],
         config = {})
     wandb.config.update(config.getConfigDict())
 

@@ -5,15 +5,23 @@
             "name":"ContentRanking",
             "config":"ContentRankingDynamicImportance.json",
             "train":false,
-            "pretrained_model":"./data/models/model.pt",
-            "inference":true,
+            "pretrained_model":"./data/models/ContentRanking.pt",
+            "inference":false,
             "from_previous":false
+        },
+        {
+            "name":"Bart",
+            "config":"bart.json",
+            "train":false,
+            "pretrained_model":"./data/models/bart-cnn",
+            "inference":true,
+            "from_previous":true
         }
     ],
     "output":{
-        "folder":"RepAware_test",
+        "folder":"Results",
         "save_model":false,
         "logging":false,
-        "wandb":false
+        "wandb":null
     }
 }
